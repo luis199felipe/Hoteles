@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %} Habitación {{habitacion}}{% endblock %}
+
+{% block content %}
+<div class="col-lg-12">
+ <h3>Ver registros de la habitación </h3>
+ 
+	
+<div class="col-md-12 mt">
+      <div class="content-panel">
+      <table class="table table-hover">
+	  	  <h4><i class="fa fa-angle-right"></i>Habitacion {{habitacion}}</h4>
+	  	  <hr>
+          <thead>
+          <tr>
+              <th>Fecha</th>
+              <th>Estado</th>
+          </tr>
+          </thead>
+          <tbody>
+          
+	          	{% for x in habitacion %}
+				<tr>
+						<td> {{ x.fecha }} </td>
+						<td> {{ x.estado }} </td>
+				</tr>
+			{% endfor %}
+		
+          
+          </tbody>
+      </table></div>
+      </div><!-- /col-md-12 -->
+</div>
+{% endblock %}

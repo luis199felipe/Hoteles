@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block title %} Bienvenido {{usuario.username}} {% endblock %}
+
+{% block content %}
+ <div class="col-lg-12">
+              <h3>Bienvenido {{usuario.first_name}} {{usuario.last_name}}, esta página le mostrará los registros guardados</h3>
+</div>
+
+
+
+	{% if UnHotel %}
+	<div class="col-md-12 mt">
+	<div class="content-panel">
+      <table class="table table-hover">
+	  	  <h4><i class="fa fa-angle-right"></i>Hotel </h4>
+	  	  <hr>
+          <thead>
+          <tr>
+              <th># Habitacion</th>
+              <th>Fecha</th>
+              <th>Estado</th>
+          </tr>
+          </thead>
+          <tbody>
+
+	          	{% for habitacion in habitaciones %}
+				<tr>
+						<td> <a href="../vistaPorHabitacion/{{ habitacion.id_habitacion }}">{{ habitacion.id_habitacion }} </a></td>
+						<td> {{ habitacion.fecha }} </td>
+						<td> {{ habitacion.estado }} </td>
+				</tr>
+			{% endfor %}
+
+
+          </tbody>
+      </table>
+  </div>
+</div>
+      {% else %}
+      {% for hotel,habitacion in habitaciones %}
+      <div class="col-md-12 mt">
+      <div class="content-panel">
+      <table class="table table-hover">
+	  	  <h4><i class="fa fa-angle-right"></i>Hotel {{hotel}}</h4>
+	  	  <hr>
+          <thead>
+          <tr>
+              <th># Habitacion</th>
+              <th>Fecha</th>
+              <th>Estado</th>
+          </tr>
+          </thead>
+          <tbody>
+            {% for lista in habitacion %}
+        				<tr>
+        						<td><a href="../vistaPorHabitacion/{{ lista.id }}"> {{ lista.id_habitacion }}</a> </td>
+        						<td> {{ lista.fecha }} </td>
+        						<td> {{ lista.estado }} </td>
+        				</tr>
+			     {% endfor %}
+        </tbody>
+      </table></div>
+      </div><!-- /col-md-12 -->
+      {% endfor %}
+      {% endif %}
+{% endblock %}

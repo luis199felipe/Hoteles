@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}Pefil de {{usuario.first_name}} {% endblock %}
+
+
+{% block content %}
+
+      <h3><i class="fa fa-angle-right"></i> Datos del Cliente</h3>
+
+      <!-- BASIC FORM ELELEMNTS -->
+      <div class="row mt">
+        <div class="col-lg-12">
+            <div class="form-panel">
+                <form class="form-horizontal style-form" method="get">
+                    <div class="form-group">
+                        <label class="col-sm-2 col-sm-2 control-label">Nombre</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" value="{{usuario.first_name}} {{usuario.last_name}}">
+                        </div>
+                </form>
+            </div>
+            </div><!-- col-lg-12-->
+      </div><!-- /row -->
+
+{% endblock %}
