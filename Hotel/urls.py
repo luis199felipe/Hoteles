@@ -6,9 +6,9 @@ from tablero.views import vistaPorHabitacion,home,vistaPerfil,salir,funcion,ingr
 urlpatterns = [
 	url(r'^admin/', admin.site.urls),
 	url(r'^home/',home,name='inicio'),
+	url(r'^funcion/([0-9]{1})/([0-9]{3})/([0-9]{1})/$',funcion,name='funcion'),
 	url(r'^$',ingresar,name='ingresar'),
 	url(r'^perfil/',vistaPerfil,name='perfil'),
 	url(r'^salir/',salir,name='salir'),
-	url(r'^vistaPorHabitacion/([0-9]{2})',vistaPorHabitacion),
-	url(r'^funcion/([0-9]{1})/([0-9]{2})/([0-9]{1})/$',funcion,name='funcion'),
+	url(r'^vistaPorHabitacion/([0-9]{3})/([0-9]{1})',vistaPorHabitacion),
 ]

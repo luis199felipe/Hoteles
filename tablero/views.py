@@ -10,41 +10,44 @@ from tablero.models import Habitacion,Hotel
 
 @login_required()
 def home(request):
-   hotel = Hotel.objects.filter(propietario=request.user)
-   if len(hotel) == 1:
-      habitaciones = Habitacion.objects.filter(hotel=hotel)
-      print list(habitaciones.values())
-      UnHotel = True
-   else:
+  hotel = Hotel.objects.filter(propietario=request.user)
+  if len(hotel) == 1:
+    habitaciones = Habitacion.objects.filter(hotel=hotel)
+    print list(habitaciones.values())
+    UnHotel = True
+  else:
+    habitaciones = {}
 
-      habitaciones = {}
-      UnHotel = False
-      i=0
-      for x in hotel:
-         habitaciones[x.nombre] = Habitacion.objects.filter(hotel=x)
-         i = i+1
-      print habitaciones.values()
-      habitaciones = habitaciones.items()
-   return render(request,'inicio.html',{
-      'usuario':request.user,
-      'habitaciones':habitaciones,
-      'UnHotel':UnHotel,
-      'Hotel':hotel
-   })
+    UnHotel = False
+    i=0
+    for x in hotel:
+       habitaciones[x.nombre] = Habitacion.objects.filter(hotel=x)
+       i = i+1
+    hotel = Hotel.objects.filter(propietario=request.user).values('id')
+    habitaciones = habitaciones.items()
+
+  return render(request,'inicio.html',{
+    'usuario':request.user,
+    'habitaciones':habitaciones,
+    'UnHotel':UnHotel,
+    'Hotel':hotel,
+  })
 
 @login_required()
-def vistaPorHabitacion(request,idHabitacion):
-   habitacion = Habitacion.objects.filter(id_habitacion=idHabitacion)
-   return render(request,'vistaPorHabitacion.html',{
-      'usuario':request.user,
-      'habitacion':habitacion
-      })
+def vistaPorHabitacion(request,idHabitacion,idHotel):
+  hotel = Hotel.objects.get(id=idHotel)
+  habitacion = Habitacion.objects.filter(id_habitacion=idHabitacion,hotel=hotel)
+  return render(request,'vistaPorHabitacion.html',{
+    'usuario':request.user,
+    'habitacion':habitacion,
+    'hotel':hotel,
+    'idHabitacion':idHabitacion
+    })
 
 @login_required()
 def vistaPerfil(request):
     user =request.user
     hoteles = Hotel.objects.filter(propietario=user)
-    print hoteles
     return render(request,'perfil.html',{
     'usuario':user,
     'hotel':hoteles
@@ -56,8 +59,8 @@ def funcion(request,idHotel,idHabitacion,state):
    else:
       state = "Libre"
 
-   # hotel = Hotel.objects.get(id=idHotel)
-   new_estate = Habitacion(estado=state,id_habitacion=idHabitacion)
+   hotel = Hotel.objects.get(id=idHotel)
+   new_estate = Habitacion(estado=state,id_habitacion=idHabitacion,hotel=hotel)
    new_estate.save()
    return render(request,'funcion.html',{'idHotel':idHotel,'idHabitacion':idHabitacion,'state':state})
 
@@ -76,7 +79,6 @@ def ingresar(request):
       else:
          print "The username and password were incorrect."
    return render(request,'ingresar.html',{'datos':{'titulo':'Ingrese'},'form':loginForm})
-
 
 def salir(request):
    logout(request)

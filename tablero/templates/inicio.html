@@ -54,7 +54,7 @@
           <tbody>
             {% for lista in habitacion %}
         				<tr>
-        						<td><a href="../vistaPorHabitacion/{{ lista.id }}"> {{ lista.id_habitacion }}</a> </td>
+        						<td><a href="../vistaPorHabitacion/{{ lista.id_habitacion }}/{{ lista.hotel_id }}"> {{ lista.id_habitacion }}</a> </td>
         						<td> {{ lista.fecha }} </td>
         						<td> {{ lista.estado }} </td>
         				</tr>
